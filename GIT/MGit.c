@@ -162,10 +162,11 @@ void commit(const char* message) {
     char parent[MAX_LINE];
     getBranchHead(branch, parent);
 
-    char metadata[1024];
-    snprintf(metadata, sizeof(metadata),
-             "message: %s\ntimestamp: %sparent: %s\nbranch: %s\n",
-             message, getCurrentTime(), parent, branch);
+    char metadata[4096];
+snprintf(metadata, sizeof(metadata),
+         "message: %s\ntimestamp: %sparent: %s\nbranch: %s\n",
+         message, getCurrentTime(), parent, branch);
+
 
     char* hash = Hash(strcat(metadata, commitData));
 

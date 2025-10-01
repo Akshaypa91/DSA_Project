@@ -148,7 +148,11 @@ void commit(FileQueue* q, const char* message) {
     }
 
     // Compute commit hash
-    char* commitHash = Hash(metadata + commitData);
+    char combined[5120]; // enough to hold metadata + commitData
+    snprintf(combined, sizeof(combined), "%s%s", metadata, commitData);
+
+    char* commitHash = Hash(combined);
+
 
     // Write commit file
     char commitPath[256];
