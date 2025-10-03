@@ -14,27 +14,11 @@
 #endif
 
 // ======= DATA STRUCTURES ======= //
-
-// Hash table for tracking files
-#define TABLE_SIZE 100
-extern struct FileNode* hashTable[TABLE_SIZE];
-
-// Forward declaration of hash function
-int hashFunc(const char* str);
-void trackFile(const char* filename);
-
-
-// File node for tracking files (hash table in utils.c)
 typedef struct FileNode {
     char filename[100];
     struct FileNode* next;
 } FileNode;
 
-// Global pointers for staging area (used in add.c)
-extern FileNode* stagingHead;
-extern FileNode* stagingTail;
-
-// Commit structure
 typedef struct Commit {
     unsigned long commitId;
     char message[256];
@@ -42,61 +26,57 @@ typedef struct Commit {
     struct Commit* parent;
 } Commit;
 
-// Global pointer for commit list (used in commit.c, log.c)
-extern Commit* commitHead;
-
-// Branch structure
 typedef struct Branch {
     char name[100];
     Commit* head;
     struct Branch* next;
 } Branch;
 
-// Global pointer for branch list (used in branch.c)
+// ======= GLOBAL VARIABLES ======= //
+extern FileNode* stagingHead;
+extern FileNode* stagingTail;
+extern Commit* commitHead;
 extern Branch* branchHead;
 
 // ======= UTILS FUNCTION PROTOTYPES ======= //
-
-// General helpers
 unsigned long simpleHash(char* str);
 void makeDir(const char* folder);
 char* readFile(const char* filename);
 void writeFile(const char* filename, const char* content);
 void printSeparator();
 int fileExists(const char* filename);
-void trackFile(const char* filename);  // only in utils.c
+void trackFile(const char* filename);
 
 // ======= MODULE FUNCTIONS ======= //
-
 // Init
-void initRepo(); // defined in init.c
+void initRepo();
 
 // Add
-void addFile(char* filename);          // defined in add.c
-void showStagingArea(void);            // defined in add.c
+void addFile(char* filename);
+void showStagingArea(void);
 
 // Commit
-void commitChanges(char* message);     // defined in commit.c
+void commitChanges(char* message);
 
 // Log
-void logCommits();                     // defined in log.c
+void logCommits();
 
 // Checkout
-void checkoutCommit(unsigned long commitId); // defined in checkout.c
+void checkoutCommit(unsigned long commitId);
 
 // Branch
-void createBranch(char* name);         // defined in branch.c
-void listBranches();                    // defined in branch.c
-void checkoutBranch(char* name);       // defined in branch.c
+void createBranch(char* name);
+void listBranches();
+void checkoutBranch(char* name);
 
 // Merge
-void mergeBranch(char* branchName);    // defined in merge.c
+void mergeBranch(char* branchName);
 
 // Diff
-void diffCommits(unsigned long c1, unsigned long c2); // defined in diff.c
+void diffCommits(unsigned long c1, unsigned long c2);
 
 // Remote
-void pushToRemote(char* remotePath);   // defined in remote.c
-void pullFromRemote(char* remotePath); // defined in remote.c
+void pushToRemote(char* remotePath);
+void pullFromRemote(char* remotePath);
 
-#endif // UTILS_H
+#endif

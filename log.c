@@ -1,4 +1,3 @@
-// log.c
 #include "utils.h"
 
 void logCommits() {
@@ -9,19 +8,19 @@ void logCommits() {
     }
 
     char line[512];
-    int hasCommits = 0;
+    int found = 0;
     while (fgets(line, sizeof(line), f)) {
-        size_t len = strlen(line);
-        if (len > 0 && (line[len-1] == '\n' || line[len-1] == '\r'))
-            line[len-1] = '\0';
-        if (strlen(line) > 0) {
-            printf("%s\n", line);
-            hasCommits = 1;
+        char id[32], msg[256];
+        if (sscanf(line, "%s : %[^\n]", id, msg) == 2) {
+            found = 1;
+            printf("Commit ID: %s\n", id);
+            printf("Message: %s\n", msg);
+            // optionally read timestamp if stored
+            printf("-----------------------------\n");
         }
     }
-    fclose(f);
-
-    if (!hasCommits) {
+    if (!found) {
         printf("No commits yet.\n");
     }
+    fclose(f);
 }

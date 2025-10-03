@@ -1,15 +1,18 @@
 #include "utils.h"
 
 void initRepo() {
-	// Create .minigit folder
-	makeDir(".minigit");
+    // Create .minigit folder
+    makeDir(".minigit");
 
-	// Create empty commits file
-	FILE* f = fopen(".minigit/commits.txt", "w");
-	if (f) fclose(f);
+    // Create empty commits file
+    FILE* f = fopen(".minigit/commits.txt", "w");
+    if (f) fclose(f);
 
-	// Initialize tracked files hash table
-	initHashTable();
+    // Initialize hash table for tracked files
+    initHashTable();   // <-- Add this line
 
-	printf("Initialized empty MiniGit repository\n");
+    // Reset commit head
+    commitHead = NULL;
+
+    printf("Initialized empty MiniGit repository\n");
 }
