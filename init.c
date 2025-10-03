@@ -1,14 +1,9 @@
-// init.c
 #include "utils.h"
 
 // ==== HashMap for tracking files ==== //
 #define TABLE_SIZE 100
 
-typedef struct FileNode {
-	char filename[100];
-	struct FileNode* next;
-} FileNode;
-
+// Sirf hashTable rakho, FileNode already utils.h me defined hai
 FileNode* hashTable[TABLE_SIZE]; // global table
 
 // Simple polynomial hash function
