@@ -75,14 +75,34 @@ void diffFiles(const char* file1, const char* file2) {
 }
 
 // ==== Diff between commits (naive: assumes same filenames) ==== //
-void diffCommits(const char* commit1, const char* commit2, const char* filename) {
+// Simple diff: compare two commit snapshot files
+void diffCommits(unsigned long c1, unsigned long c2) {
 	char path1[256], path2[256];
-	snprintf(path1, sizeof(path1), ".minigit/commits/%s/%s", commit1, filename);
-	snprintf(path2, sizeof(path2), ".minigit/commits/%s/%s", commit2, filename);
+
+	snprintf(path1, sizeof(path1), ".minigit/commits/%lu.txt", c1);
+	snprintf(path2, sizeof(path2), ".minigit/commits/%lu.txt", c2);
 
 	if (!fileExists(path1) || !fileExists(path2)) {
-		printf("File %s not found in one of the commits!\n", filename);
+		printf("One or both commit files not found!\n");
 		return;
 	}
-	diffFiles(path1, path2);
+
+	FILE *f1 = fopen(path1, "r");
+	FILE *f2 = fopen(path2, "r");
+	if (!f1 || !f2) {
+		printf("Error opening commit files!\n");
+		return;
+	}
+
+	printf("Diff between commits %lu and %lu:\n", c1, c2);
+
+	char line1[256], line2[256];
+	while (fgets(line1, sizeof(line1), f1) && fgets(line2, sizeof(line2), f2)) {
+		if (strcmp(line1, line2) != 0) {
+			printf("- %s+ %s\n", line1, line2);
+		}
+	}
+
+	fclose(f1);
+	fclose(f2);
 }

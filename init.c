@@ -1,53 +1,15 @@
 #include "utils.h"
 
-// ==== HashMap for tracking files ==== //
-#define TABLE_SIZE 100
-
-// Sirf hashTable rakho, FileNode already utils.h me defined hai
-FileNode* hashTable[TABLE_SIZE]; // global table
-
-// Simple polynomial hash function
-int hashFunc(char* str) {
-	int hash = 0;
-	for (int i = 0; str[i]; i++) {
-		hash = (hash * 31 + str[i]) % TABLE_SIZE;
-	}
-	return hash;
-}
-
-// Insert file into tracking system
-void trackFile(char* filename) {
-	int idx = hashFunc(filename);
-	FileNode* newNode = (FileNode*)malloc(sizeof(FileNode));
-	strcpy(newNode->filename, filename);
-	newNode->next = hashTable[idx];
-	hashTable[idx] = newNode;
-}
-
-// Print tracked files (debug purpose)
-void printTrackedFiles() {
-	for (int i = 0; i < TABLE_SIZE; i++) {
-		FileNode* temp = hashTable[i];
-		while (temp) {
-			printf("Tracked: %s\n", temp->filename);
-			temp = temp->next;
-		}
-	}
-}
-
-// ==== Init repository ==== //
 void initRepo() {
-	// create .minigit folder
-	mkdir(".minigit", 0700);
+	// Create .minigit folder
+	makeDir(".minigit");
 
-	// create empty commits file
+	// Create empty commits file
 	FILE* f = fopen(".minigit/commits.txt", "w");
 	if (f) fclose(f);
 
-	// initialize hash table
-	for (int i = 0; i < TABLE_SIZE; i++) {
-		hashTable[i] = NULL;
-	}
+	// Initialize tracked files hash table
+	initHashTable();
 
 	printf("Initialized empty MiniGit repository\n");
 }

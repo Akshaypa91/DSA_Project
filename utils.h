@@ -1,4 +1,3 @@
-// utils.h
 #ifndef UTILS_H
 #define UTILS_H
 
@@ -14,74 +13,90 @@
 #include <sys/types.h>
 #endif
 
-// ===================== DATA STRUCTURES ===================== //
+// ======= DATA STRUCTURES ======= //
 
-// --------- Queue / Linked List for Staging Area --------- //
+// Hash table for tracking files
+#define TABLE_SIZE 100
+extern struct FileNode* hashTable[TABLE_SIZE];
+
+// Forward declaration of hash function
+int hashFunc(const char* str);
+void trackFile(const char* filename);
+
+
+// File node for tracking files (hash table in utils.c)
 typedef struct FileNode {
-	char filename[100];
-	struct FileNode* next;
+    char filename[100];
+    struct FileNode* next;
 } FileNode;
 
+// Global pointers for staging area (used in add.c)
 extern FileNode* stagingHead;
 extern FileNode* stagingTail;
 
-// --------- Commit Linked List (Graph-like) --------- //
+// Commit structure
 typedef struct Commit {
-	unsigned long commitId;
-	char message[256];
-	time_t timestamp;
-	struct Commit* parent;
+    unsigned long commitId;
+    char message[256];
+    time_t timestamp;
+    struct Commit* parent;
 } Commit;
 
+// Global pointer for commit list (used in commit.c, log.c)
 extern Commit* commitHead;
 
-// --------- Branch Linked List --------- //
+// Branch structure
 typedef struct Branch {
-	char name[100];
-	Commit* head;          // branch HEAD pointer
-	struct Branch* next;
+    char name[100];
+    Commit* head;
+    struct Branch* next;
 } Branch;
 
+// Global pointer for branch list (used in branch.c)
 extern Branch* branchHead;
 
-// ===================== FUNCTION PROTOTYPES ===================== //
+// ======= UTILS FUNCTION PROTOTYPES ======= //
 
-// ---------- Utils (common) ---------- //
+// General helpers
 unsigned long simpleHash(char* str);
 void makeDir(const char* folder);
 char* readFile(const char* filename);
 void writeFile(const char* filename, const char* content);
 void printSeparator();
+int fileExists(const char* filename);
+void trackFile(const char* filename);  // only in utils.c
 
-// ---------- Init ---------- //
-void initRepo();
+// ======= MODULE FUNCTIONS ======= //
 
-// ---------- Add (Queue / Linked List) ---------- //
-void addFile(char* filename);
-void showStagingArea();
+// Init
+void initRepo(); // defined in init.c
 
-// ---------- Commit ---------- //
-void commitChanges(char* message);
+// Add
+void addFile(char* filename);          // defined in add.c
+void showStagingArea(void);            // defined in add.c
 
-// ---------- Log ---------- //
-void logCommits();
+// Commit
+void commitChanges(char* message);     // defined in commit.c
 
-// ---------- Checkout ---------- //
-void checkoutCommit(unsigned long commitId);
+// Log
+void logCommits();                     // defined in log.c
 
-// ---------- Branch ---------- //
-void createBranch(char* name);
-void listBranches();
-void checkoutBranch(char* name);
+// Checkout
+void checkoutCommit(unsigned long commitId); // defined in checkout.c
 
-// ---------- Merge ---------- //
-void mergeBranch(char* branchName);
+// Branch
+void createBranch(char* name);         // defined in branch.c
+void listBranches();                    // defined in branch.c
+void checkoutBranch(char* name);       // defined in branch.c
 
-// ---------- Diff ---------- //
-void diffCommits(unsigned long c1, unsigned long c2);
+// Merge
+void mergeBranch(char* branchName);    // defined in merge.c
 
-// ---------- Remote ---------- //
-void pushToRemote(char* remotePath);
-void pullFromRemote(char* remotePath);
+// Diff
+void diffCommits(unsigned long c1, unsigned long c2); // defined in diff.c
 
-#endif
+// Remote
+void pushToRemote(char* remotePath);   // defined in remote.c
+void pullFromRemote(char* remotePath); // defined in remote.c
+
+#endif // UTILS_H

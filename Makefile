@@ -1,26 +1,27 @@
-# Compiler
+# Compiler and flags
 CC = gcc
 CFLAGS = -Wall -g
 
-# Executable name
-TARGET = mini_git
-
 # Source files
 SRCS = main.c init.c add.c commit.c log.c checkout.c branch.c merge.c diff.c remote.c utils.c
+
+# Object files
 OBJS = $(SRCS:.c=.o)
 
-# Build target
+# Output executable
+TARGET = mini_git
+
+# Default target
+all: $(TARGET)
+
+# Link executable
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
 
-# Compile .c into .o
-%.o: %.c utils.h
+# Compile .c files to .o
+%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Clean build files
+# Clean object files and executable
 clean:
 	rm -f $(OBJS) $(TARGET)
-
-# Run program
-run: $(TARGET)
-	./$(TARGET)

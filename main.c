@@ -1,118 +1,93 @@
 // main.c
 #include "utils.h"
 
-// Global variables (defined once here)
-FileNode* stagingHead = NULL;
-FileNode* stagingTail = NULL;
-Commit* commitHead = NULL;
-Branch* branchHead = NULL;
-
-int main() {
-	int choice;
-	char filename[100], msg[256], branchName[100], remotePath[200];
-	unsigned long commitId, c1, c2;
-
-	while (1) {
-		printf("\n==== Mini Git (DSA Version Control) ====\n");
-		printf("1. Init Repository\n");
-		printf("2. Add File\n");
-		printf("3. Show Staging Area\n");
-		printf("4. Commit\n");
-		printf("5. Log Commits\n");
-		printf("6. Checkout Commit\n");
-		printf("7. Create Branch\n");
-		printf("8. List Branches\n");
-		printf("9. Checkout Branch\n");
-		printf("10. Merge Branch\n");
-		printf("11. Diff Between Commits\n");
-		printf("12. Push to Remote\n");
-		printf("13. Pull from Remote\n");
-		printf("0. Exit\n");
-		printf("Enter choice: ");
-		scanf("%d", &choice);
-		getchar(); // clear newline
-
-		switch (choice) {
-			case 1:
-				initRepo();
-				break;
-
-			case 2:
-				printf("Enter filename: ");
-				scanf("%s", filename);
-				addFile(filename);
-				break;
-
-			case 3:
-				showStagingArea();
-				break;
-
-			case 4:
-				printf("Enter commit message: ");
-				fgets(msg, sizeof(msg), stdin);
-				msg[strcspn(msg, "\n")] = 0; // remove newline
-				commitChanges(msg);
-				break;
-
-			case 5:
-				logCommits();
-				break;
-
-			case 6:
-				printf("Enter commit ID: ");
-				scanf("%lu", &commitId);
-				checkoutCommit(commitId);
-				break;
-
-			case 7:
-				printf("Enter branch name: ");
-				scanf("%s", branchName);
-				createBranch(branchName);
-				break;
-
-			case 8:
-				listBranches();
-				break;
-
-			case 9:
-				printf("Enter branch name: ");
-				scanf("%s", branchName);
-				checkoutBranch(branchName);
-				break;
-
-			case 10:
-				printf("Enter branch name to merge: ");
-				scanf("%s", branchName);
-				mergeBranch(branchName);
-				break;
-
-			case 11:
-				printf("Enter Commit ID 1: ");
-				scanf("%lu", &c1);
-				printf("Enter Commit ID 2: ");
-				scanf("%lu", &c2);
-				diffCommits(c1, c2);
-				break;
-
-			case 12:
-				printf("Enter remote folder path: ");
-				scanf("%s", remotePath);
-				pushToRemote(remotePath);
-				break;
-
-			case 13:
-				printf("Enter remote folder path: ");
-				scanf("%s", remotePath);
-				pullFromRemote(remotePath);
-				break;
-
-			case 0:
-				printf("Exiting Mini Git...\n");
-				exit(0);
-
-			default:
-				printf("Invalid choice! Try again.\n");
-		}
+int main(int argc, char* argv[]) {
+	if (argc < 2) {
+		printf("Usage: ./mini_git <command> [args]\n");
+		printf("Commands: init, add, show, commit, log, checkout, branch, merge, diff, push, pull\n");
+		return 1;
 	}
+
+	char* cmd = argv[1];
+
+	if (strcmp(cmd, "init") == 0) {
+		initRepo();
+	}
+	else if (strcmp(cmd, "add") == 0) {
+		if (argc < 3) {
+			printf("Usage: ./mini_git add <filename>\n");
+			return 1;
+		}
+		addFile(argv[2]);
+	}
+	else if (strcmp(cmd, "show") == 0) {
+		showStagingArea();
+	}
+	else if (strcmp(cmd, "commit") == 0) {
+		if (argc < 3) {
+			printf("Usage: ./mini_git commit <message>\n");
+			return 1;
+		}
+		commitChanges(argv[2]);
+	}
+	else if (strcmp(cmd, "log") == 0) {
+		logCommits();
+	}
+	else if (strcmp(cmd, "checkout") == 0) {
+		if (argc < 3) {
+			printf("Usage: ./mini_git checkout <commitID>\n");
+			return 1;
+		}
+		checkoutCommit(strtoul(argv[2], NULL, 10));
+	}
+	else if (strcmp(cmd, "branch") == 0) {
+		if (argc < 3) {
+			printf("Usage: ./mini_git branch <branchName>\n");
+			return 1;
+		}
+		createBranch(argv[2]);
+	}
+	else if (strcmp(cmd, "list-branches") == 0) {
+		listBranches();
+	}
+	else if (strcmp(cmd, "checkout-branch") == 0) {
+		if (argc < 3) {
+			printf("Usage: ./mini_git checkout-branch <branchName>\n");
+			return 1;
+		}
+		checkoutBranch(argv[2]);
+	}
+	else if (strcmp(cmd, "merge") == 0) {
+		if (argc < 3) {
+			printf("Usage: ./mini_git merge <branchName>\n");
+			return 1;
+		}
+		mergeBranch(argv[2]);
+	}
+	else if (strcmp(cmd, "diff") == 0) {
+		if (argc < 4) {
+			printf("Usage: ./mini_git diff <commit1> <commit2>\n");
+			return 1;
+		}
+		diffCommits(strtoul(argv[2], NULL, 10), strtoul(argv[3], NULL, 10));
+	}
+	else if (strcmp(cmd, "push") == 0) {
+		if (argc < 3) {
+			printf("Usage: ./mini_git push <remotePath>\n");
+			return 1;
+		}
+		pushToRemote(argv[2]);
+	}
+	else if (strcmp(cmd, "pull") == 0) {
+		if (argc < 3) {
+			printf("Usage: ./mini_git pull <remotePath>\n");
+			return 1;
+		}
+		pullFromRemote(argv[2]);
+	}
+	else {
+		printf("Unknown command: %s\n", cmd);
+	}
+
 	return 0;
 }
