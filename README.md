@@ -1,162 +1,181 @@
-# MiniGit (DSA Version Control System)
+# MiniGit - Version Control System in C
 
-MiniGit is a simplified version control system implemented in C. It allows you to track files, commit changes, manage branches, checkout commits, and view commit history — similar to Git, but simplified for learning and experimentation.
-
----
-
-## Prerequisites
-
-- GCC compiler (`gcc`) installed
-- Linux or Windows environment
-- Terminal / Command line access
+A simplified Git implementation built in C for learning Data Structures & Algorithms concepts.
 
 ---
 
-## Project Structure
+## Features
 
-DSA_Project_SY/
-├── main.c
-├── init.c
-├── add.c
-├── commit.c
-├── log.c
-├── checkout.c
-├── branch.c
-├── merge.c
-├── diff.c
-├── remote.c
-├── utils.c
-├── utils.h
-├── Makefile
-└── README.md
-
+- 📦 Initialize repository
+- ➕ Stage files for commit
+- 💾 Create commits with messages
+- 📜 View commit history
+- 🔄 Checkout commits/branches
+- 🌿 Create and manage branches
+- 🔀 Merge branches
+- 📊 Compare commits (diff)
+- 🌐 Push/pull to remote
 
 ---
 
 ## Quick Start
 
-Run these commands to quickly try the project:
-
 ```bash
-# Initialize repository
-./mini_git init
-
-# Create a file
-echo "Hello world" > file1.txt
-
-# Add file to staging area
-./mini_git add file1.txt
-
-# Commit changes with a message
-./mini_git commit "Initial commit"
-
-# View commit history
-./mini_git log
-
-
-Build Instructions
-
-Open a terminal in the project directory.
-
-Clean previous builds (optional):
-
-make clean
-
-
-Compile the project using the Makefile:
-
+# Clone and build
+git clone https://github.com/Akshaypa91/DSA_Project.git
+cd DSA_Project
 make
 
-
-This will generate the executable:
-
-mini_git
-
-Running MiniGit
-Interactive Menu Mode
-
-Run the program and follow the menu:
-
-./mini_git
-
-
-You will see options:
-
-1. Init Repository
-2. Add File
-3. Show Staging Area
-4. Commit
-5. Log Commits
-6. Checkout Commit
-7. Create Branch
-8. List Branches
-9. Checkout Branch
-10. Merge Branch
-11. Diff Between Commits
-12. Push to Remote
-13. Pull from Remote
-0. Exit
-
-Command-Line Mode
-
-You can also execute commands directly:
-
 # Initialize repository
 ./mini_git init
 
-# Add a file to staging area
-./mini_git add file1.txt
-
-# Commit changes with a message
+# Create and commit a file
+echo "Hello World" > file.txt
+./mini_git add file.txt
 ./mini_git commit "Initial commit"
 
-# View commit history
+# View history
 ./mini_git log
+```
 
-Example Usage
-# Initialize repository
-./mini_git init
-# Output: Initialized empty MiniGit repository
+---
 
-# Create a file
-echo "Hello world" > file1.txt
+### Build
 
-# Add file to staging area
-./mini_git add file1.txt
-# Output: Added 'file1.txt' to staging area
+```bash
+# Compile
+make
 
-# Commit the changes
-./mini_git commit "Initial commit"
-# Output: Committed as c131 : Initial commit
-
-# View commit history
-./mini_git log
-# Output:
-# Commit ID: c131
-# Message: Initial commit
-# Timestamp: Thu Oct 3 17:30:00 2025
-# -----------------------------
-
-Features
-
-Initialize a repository (.minigit folder)
-
-Add files to staging area
-
-Commit changes with messages and timestamps
-
-View commit history (log)
-
-Simple snapshot system for file versioning
-
-Branch creation, checkout, and merging
-
-Diff between commits
-
-Push and pull to remote folder
-
-Cleaning Up
-
-Remove compiled files and executable:
-
+# Clean build artifacts
 make clean
+```
+
+---
+
+## Usage
+
+## Commands
+
+| Command | Usage | Description |
+|---------|-------|-------------|
+| `init` | `./mini_git init` | Initialize repository |
+| `add` | `./mini_git add <file>` | Stage file |
+| `commit` | `./mini_git commit "msg"` | Create commit |
+| `log` | `./mini_git log` | View history |
+| `status` | `./mini_git status` | Show staging area |
+| `branch` | `./mini_git branch <name>` | Create branch |
+| `branches` | `./mini_git branches` | List branches |
+| `checkout` | `./mini_git checkout <branch/commit>` | Switch branch/commit |
+| `merge` | `./mini_git merge <branch>` | Merge branch |
+| `diff` | `./mini_git diff <id1> <id2>` | Compare commits |
+| `push` | `./mini_git push` | Push to remote |
+| `pull` | `./mini_git pull` | Pull from remote |
+
+---
+
+## Examples
+
+### Basic Workflow
+
+```bash
+# Initialize
+./mini_git init
+
+# Create and stage file
+echo "Code here" > main.c
+./mini_git add main.c
+
+# Commit
+./mini_git commit "Add main.c"
+
+# View history
+./mini_git log
+```
+
+### Branch Workflow
+
+```bash
+# Create feature branch
+./mini_git branch feature
+./mini_git checkout feature
+
+# Make changes
+echo "New feature" > feature.c
+./mini_git add feature.c
+./mini_git commit "Add feature"
+
+# Merge to main
+./mini_git checkout main
+./mini_git merge feature
+```
+
+---
+
+## Project Structure
+
+```
+DSA_Project/
+├── main.c          # Entry point
+├── init.c          # Repository init
+├── add.c           # Staging
+├── commit.c        # Commits
+├── log.c           # History
+├── checkout.c      # Checkout
+├── branch.c        # Branches
+├── merge.c         # Merging
+├── diff.c          # Comparison
+├── remote.c        # Remote ops
+├── utils.c         # Utilities
+├── utils.h         # Headers
+└── Makefile        # Build config
+```
+
+### Repository Structure
+
+```
+.minigit/
+├── commits/        # Commit objects
+├── refs/           # Branch refs
+├── staging/        # Staged files
+└── HEAD            # Current pointer
+```
+
+---
+
+## How It Works
+
+**Data Structures:**
+- Linked Lists → Commit chains
+- Hash Tables → File tracking
+- Trees → Directory structure
+
+**Storage:**
+- Each commit stores file snapshots
+- Branches point to commits
+- HEAD tracks current location
+
+---
+
+## Contributing
+
+1. Fork the repo
+2. Create feature branch: `git checkout -b feature-name`
+3. Commit changes: `git commit -m 'Add feature'`
+4. Push: `git push origin feature-name`
+5. Open Pull Request
+
+---
+
+## Author
+
+****
+
+DSA Project - Second Year (2025-2026)
+
+---
+
+## Acknowledgments
+
+- Inspired by Git
+- Built for educational purposes
+- Part of DSA coursework
