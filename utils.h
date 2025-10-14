@@ -4,8 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
+#include <time.h> //for Time Function
 
+//For Other Operating Systems
 #ifdef _WIN32
 #include <direct.h>
 #else
@@ -13,7 +14,6 @@
 #include <sys/types.h>
 #endif
 
-// ======= DATA STRUCTURES ======= //
 typedef struct FileNode {
     char filename[100];
     struct FileNode* next;
@@ -32,13 +32,13 @@ typedef struct Branch {
     struct Branch* next;
 } Branch;
 
-// ======= GLOBAL VARIABLES ======= //
+// Global Variable
 extern FileNode* stagingHead;
 extern FileNode* stagingTail;
 extern Commit* commitHead;
 extern Branch* branchHead;
 
-// ======= UTILS FUNCTION PROTOTYPES ======= //
+// Utils Function ProtoTypes
 unsigned long simpleHash(char* str);
 void makeDir(const char* folder);
 char* readFile(const char* filename);
@@ -47,7 +47,7 @@ void printSeparator();
 int fileExists(const char* filename);
 void trackFile(const char* filename);
 
-// ======= MODULE FUNCTIONS ======= //
+// Function Module
 // Init
 void initRepo();
 
