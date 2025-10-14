@@ -1,15 +1,15 @@
 #include "utils.h"
 
-// ======= GLOBAL VARIABLES ======= //
+// Global Variable
 FileNode* stagingHead = NULL;
 FileNode* stagingTail = NULL;
 
 Commit* commitHead = NULL;
 Branch* branchHead = NULL;
 
-// ======= File Tracking Hash Table ======= //
+// File Tracking Hash Table
 #define TABLE_SIZE 100
-FileNode* hashTable[TABLE_SIZE];  // hash table for tracked files
+FileNode* hashTable[TABLE_SIZE];  //hash table for tracked files
 
 // Simple hash function
 int hashFunc(const char* str) {
@@ -29,7 +29,7 @@ void trackFile(const char* filename) {
 	hashTable[idx] = newNode;
 }
 
-// Debug: print tracked files
+// Debug:-> print tracked files
 void printTrackedFiles() {
 	for (int i = 0; i < TABLE_SIZE; i++) {
 		FileNode* temp = hashTable[i];
@@ -46,7 +46,7 @@ void initHashTable() {
 		hashTable[i] = NULL;
 }
 
-// ======= UTILITY HELPERS ======= //
+// Utility Helpers
 unsigned long simpleHash(char* str) { return 0; } // implement as needed
 
 void makeDir(const char* folder) {
@@ -66,7 +66,10 @@ char* readFile(const char* filename) {
 	fseek(f, 0, SEEK_SET);
 
 	char* buffer = (char*)malloc(size + 1);
-	if (!buffer) { fclose(f); return NULL; }
+	if (!buffer) {
+		fclose(f);
+		return NULL;
+	}
 
 	fread(buffer, 1, size, f);
 	buffer[size] = '\0';
@@ -84,7 +87,9 @@ void writeFile(const char* filename, const char* content) {
 	fclose(f);
 }
 
-void printSeparator() { printf("===========================\n"); }
+void printSeparator() {
+	printf("===========================\n");
+}
 int fileExists(const char* filename) { 
 	FILE* f = fopen(filename, "r");
 	if (!f) return 0;
