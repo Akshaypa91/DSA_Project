@@ -10,7 +10,7 @@ void createBranch(char* name) {
 
 	Branch* newBranch = (Branch*)malloc(sizeof(Branch));
 	strcpy(newBranch->name, name);
-	newBranch->head = commitHead;   // branch points to current HEAD
+	newBranch->head = commitHead; //branch points to current HEAD
 	newBranch->next = branchHead;
 	branchHead = newBranch;
 
@@ -28,7 +28,7 @@ void listBranches() {
 	Branch* temp = branchHead;
 	while (temp != NULL) {
 		if (temp->head == commitHead) {
-			printf("* %s (HEAD)\n", temp->name);  // show current branch
+			printf("* %s (HEAD)\n", temp->name); //show current branch
 		} else {
 			printf("  %s\n", temp->name);
 		}
