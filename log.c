@@ -18,7 +18,7 @@ void logCommits() {
 
 			time_t t = (time_t)ts;
 			char* tsStr = ctime(&t);
-			tsStr[strcspn(tsStr, "\n")] = 0; // remove newline
+			tsStr[strcspn(tsStr, "\n")] = 0; //remove newline
 			printf("Timestamp: %s\n", tsStr);
 			printf("-----------------------------\n");
 		}
