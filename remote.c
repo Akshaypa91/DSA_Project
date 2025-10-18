@@ -17,13 +17,13 @@ void pullFromRemote(char* remotePath) {
 	pullCommit(remotePath);
 }
 
-// ===== Internal helpers =====
+// Internal helpers
 void enqueuePush(const char* commitID) {
 	printf("Pushing commit %s to remote\n", commitID);
-	// TODO: implement push logic
+	// implement push logic
 }
 
 void pullCommit(const char* commitID) {
 	printf("Pulling commit %s from remote\n", commitID);
-	// TODO: implement pull logic
+	// implement pull logic
 }

@@ -23,7 +23,7 @@ void mergeBranch(char* branchName) {
 		return;
 	}
 
-	// Simple merge = copy latest commit message
+	// Simple merge => copy latest commit message
 	Commit* newCommit = (Commit*)malloc(sizeof(Commit));
 	newCommit->commitId = simpleHash("merge");
 	snprintf(newCommit->message, sizeof(newCommit->message),
