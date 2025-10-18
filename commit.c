@@ -5,7 +5,7 @@
 
 static int commitCount = 0;
 
-// ==== Generate Commit ID ==== //
+// Generate Commit ID
 static char* generateCommitID(char* message) {
 	static char id[MAX_ID_LEN];
 	unsigned long h = simpleHash(message) ^ (commitCount + 1) * 131; 
@@ -13,7 +13,7 @@ static char* generateCommitID(char* message) {
 	return id;
 }
 
-// ==== Save snapshot of files ==== //
+// Save snapshot of files
 static void saveSnapshot(const char* commitID) {
 	char folder[256];
 	snprintf(folder, sizeof(folder), ".minigit/commits/%s", commitID);
@@ -46,7 +46,7 @@ static void saveSnapshot(const char* commitID) {
 	fclose(f);
 }
 
-// ==== Make a new commit ==== //
+// Make a new commit
 void commitChanges(char* msg) {
 	FILE* f = fopen(".minigit/staging.txt", "r");
 	if (!f) {
