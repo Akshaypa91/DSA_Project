@@ -4,7 +4,7 @@
 #define MAX_LINES 1000
 #define MAX_LEN   256
 
-// ==== Utility: Split file into lines ==== //
+// Utility:- Split file into lines
 int readFileLines(const char* filename, char lines[MAX_LINES][MAX_LEN]) {
 	FILE* f = fopen(filename, "r");
 	if (!f) return 0;
@@ -20,7 +20,7 @@ int readFileLines(const char* filename, char lines[MAX_LINES][MAX_LEN]) {
 	return count;
 }
 
-// ==== LCS Table ==== //
+// LCS Table
 int LCS(char A[MAX_LINES][MAX_LEN], int n,
         char B[MAX_LINES][MAX_LEN], int m,
         int dp[MAX_LINES+1][MAX_LINES+1]) {
@@ -36,25 +36,25 @@ int LCS(char A[MAX_LINES][MAX_LEN], int n,
 	return dp[n][m];
 }
 
-// ==== Print Diff ==== //
+// Print Diff
 void printDiffRecursive(char A[MAX_LINES][MAX_LEN], int n,
                         char B[MAX_LINES][MAX_LEN], int m,
                         int dp[MAX_LINES+1][MAX_LINES+1]) {
 	if (n > 0 && m > 0 && strcmp(A[n-1], B[m-1]) == 0) {
 		printDiffRecursive(A, n-1, B, m-1, dp);
-		printf("   %s\n", A[n-1]); // no change
+		printf("   %s\n", A[n-1]); //no change
 	}
 	else if (m > 0 && (n == 0 || dp[n][m-1] >= dp[n-1][m])) {
 		printDiffRecursive(A, n, B, m-1, dp);
-		printf("+  %s\n", B[m-1]); // added
+		printf("+  %s\n", B[m-1]); //added
 	}
 	else if (n > 0 && (m == 0 || dp[n][m-1] < dp[n-1][m])) {
 		printDiffRecursive(A, n-1, B, m, dp);
-		printf("-  %s\n", A[n-1]); // removed
+		printf("-  %s\n", A[n-1]); //removed
 	}
 }
 
-// ==== Diff two files ==== //
+// Diff two files
 void diffFiles(const char* file1, const char* file2) {
 	char A[MAX_LINES][MAX_LEN], B[MAX_LINES][MAX_LEN];
 	int n = readFileLines(file1, A);
@@ -74,8 +74,8 @@ void diffFiles(const char* file1, const char* file2) {
 	printSeparator();
 }
 
-// ==== Diff between commits (naive: assumes same filenames) ==== //
-// Simple diff: compare two commit snapshot files
+// Diff between commits (naive:- assumes same filenames)
+// Simple diff:- compare two commit snapshot files
 void diffCommits(unsigned long c1, unsigned long c2) {
 	char path1[256], path2[256];
 
