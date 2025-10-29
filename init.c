@@ -9,7 +9,7 @@ void initRepo() {
     if (f) fclose(f);
 
     // Initialize hash table for tracked files
-    initHashTable();   // <-- Add this line
+    initHashTable(); //Add this line
 
     // Reset commit head
     commitHead = NULL;
