@@ -38,8 +38,6 @@ echo "Hello World" > file.txt
 ./mini_git log
 ```
 
-# Branch Create
-./mini_git createBranch ____
 ---
 
 ### Build
