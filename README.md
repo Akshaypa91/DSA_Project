@@ -6,15 +6,15 @@ A simplified Git implementation built in C for learning Data Structures & Algori
 
 ## Features
 
--  Initialize repository
--  Stage files for commit
--  Create commits with messages
--  View commit history
--  Checkout commits/branches
--  Create and manage branches
--  Merge branches
--  Compare commits (diff)
--  Push/pull to remote
+- 📦 Initialize repository
+- ➕ Stage files for commit
+- 💾 Create commits with messages
+- 📜 View commit history
+- 🔄 Checkout commits/branches
+- 🌿 Create and manage branches
+- 🔀 Merge branches
+- 📊 Compare commits (diff)
+- 🌐 Push/pull to remote
 
 ---
 
