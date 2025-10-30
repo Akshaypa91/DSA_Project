@@ -8,8 +8,14 @@ static int commitCount = 0;
 // Generate Commit ID
 static char* generateCommitID(char* message) {
 	static char id[MAX_ID_LEN];
-	unsigned long h = simpleHash(message) ^ (commitCount + 1) * 131; 
-	snprintf(id, MAX_ID_LEN, "c%lu", h % 1000000);
+
+	unsigned long h1 = simpleHash(message);
+	unsigned long h2 = (unsigned long)time(NULL);
+	unsigned long h3 = commitCount * 9973; // spreading commits apart
+
+	unsigned long combined = h1 ^ h2 ^ h3;
+
+	snprintf(id, MAX_ID_LEN, "c%06lu", combined % 1000000);
 	return id;
 }
 
