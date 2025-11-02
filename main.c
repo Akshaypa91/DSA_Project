@@ -40,13 +40,14 @@ int main(int argc, char* argv[]) {
 		}
 		checkoutCommit(strtoul(argv[2], NULL, 10));
 	}
-	else if (strcmp(cmd, "branch") == 0) {
-		if (argc < 3) {
-			printf("Usage: ./mini_git branch <branchName>\n");
-			return 1;
+	else if (strcmp(argv[1], "branch") == 0) {
+		if (argc == 2) {
+			listBranches();
+		} else {
+			createBranch(argv[2]);
 		}
-		createBranch(argv[2]);
 	}
+
 	else if (strcmp(cmd, "list-branches") == 0) {
 		listBranches();
 	}
