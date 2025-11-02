@@ -1,4 +1,4 @@
-#include "utils.h"
+#include "utils.h" //test2
 Commit *commitHead = NULL;
 
 #define MAX_MSG_LEN 256
