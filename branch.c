@@ -1,6 +1,6 @@
 // branch.c //testing3.
 #include "utils.h"
-
+//test2
 // Restore last commit if memory is empty
 void restoreLastCommit() {
     if (commitHead != NULL) return;

@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h> //for Time Function
-
+//test 2
 //For Other Operating Systems
 #ifdef _WIN32
 #include <direct.h>
