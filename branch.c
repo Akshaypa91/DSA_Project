@@ -1,6 +1,5 @@
-// branch.c //test2
+// branch.c //testing2.
 #include "utils.h"
-
 
 // Restore last commit if memory is empty
 void restoreLastCommit() {
@@ -13,7 +12,8 @@ void restoreLastCommit() {
     time_t timestamp;
     Commit* last = NULL;
 
-    while (fscanf(f, "%s : %[^:] : %lld\n", id, msg, &timestamp) == 3) {
+    while (fscanf(f, "%s : %[^:] : %lld\n", id, msg, (long long *)&timestamp) == 3)
+ {
         Commit* c = (Commit*)malloc(sizeof(Commit));
         c->commitId = simpleHash(id);
         strcpy(c->message, msg);
@@ -26,7 +26,17 @@ void restoreLastCommit() {
     commitHead = last;
 }
 
-// Save branches to file
+// Helper: check if a branch already exists in memory
+static int branchExists(const char* name) {
+    Branch* t = branchHead;
+    while (t) {
+        if (strcmp(t->name, name) == 0) return 1;
+        t = t->next;
+    }
+    return 0;
+}
+
+// Save all branches to file
 void saveBranchesToFile() {
     FILE* f = fopen(".minigit/branches.txt", "w");
     if (!f) return;
@@ -41,8 +51,7 @@ void saveBranchesToFile() {
     fclose(f);
 }
 
-
-// Load branches from file
+// Load branches (skips duplicates automatically)
 void loadBranchesFromFile() {
     branchHead = NULL;
 
@@ -53,14 +62,16 @@ void loadBranchesFromFile() {
     unsigned long commitId;
 
     while (fscanf(f, "%s %lu", name, &commitId) == 2) {
+        // avoid duplicate names already in memory
+        if (branchExists(name)) continue;
+
         Branch* b = (Branch*)malloc(sizeof(Branch));
         strcpy(b->name, name);
 
-        // Try to find matching commit by ID
+        // try to match commit by ID
         Commit* c = commitHead;
-        while (c && c->commitId != commitId) {
+        while (c && c->commitId != commitId)
             c = c->parent;
-        }
 
         b->head = c;
         b->next = branchHead;
@@ -89,13 +100,20 @@ void loadHEAD(char* currentBranch) {
     fclose(f);
 }
 
-// Create a new branch from current commit
+// Create a new branch (no duplicates)
 void createBranch(char* name) {
     restoreLastCommit();
     loadBranchesFromFile();
 
     if (commitHead == NULL) {
         printf("No commits yet. Cannot create branch.\n");
+        return;
+    }
+
+    if (branchExists(name)) {
+        printf("Branch '%s' already exists.\n", name);
+        saveHEAD(name);
+        printf("Switched to branch '%s'\n", name);
         return;
     }
 
@@ -109,10 +127,10 @@ void createBranch(char* name) {
     saveHEAD(name);
 
     printf("Branch '%s' created at commit %lu\n", name, commitHead->commitId);
-    printf("Switched to branch '%s'\n", name); // auto-switch after creation
+    printf("Switched to branch '%s'\n", name);
 }
 
-// List all branches
+// List all branches (no commit IDs shown)
 void listBranches() {
     restoreLastCommit();
     loadBranchesFromFile();
@@ -129,7 +147,7 @@ void listBranches() {
     Branch* temp = branchHead;
     while (temp != NULL) {
         if (strcmp(temp->name, currentBranch) == 0)
-            printf("* %s (HEAD)\n", temp->name);   // ✅ just branch name
+            printf("* %s (HEAD)\n", temp->name);
         else
             printf("  %s\n", temp->name);
         temp = temp->next;

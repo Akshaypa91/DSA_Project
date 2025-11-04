@@ -1,4 +1,5 @@
-#include "utils.h"
+#include "utils.h" //test2
+Commit *commitHead = NULL;
 
 #define MAX_MSG_LEN 256
 #define MAX_ID_LEN  32
@@ -77,7 +78,7 @@ void commitChanges(char* msg) {
 	// Append commit info to commits.txt
 	FILE* logFile = fopen(".minigit/commits.txt", "a");
 	if (logFile) {
-		fprintf(logFile, "%s : %s : %ld\n", id, msg, newCommit->timestamp);
+		fprintf(logFile, "%s : %s : %lld\n", id, msg, (long long)newCommit->timestamp);
 		fclose(logFile);
 	}
 
