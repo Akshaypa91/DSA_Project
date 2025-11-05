@@ -1,5 +1,5 @@
 #include "utils.h"
-
+//test2
 void initRepo() {
     // Create .minigit folder
     makeDir(".minigit");

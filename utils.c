@@ -1,10 +1,10 @@
 #include "utils.h"
-
+//test2
 // Global Variable
 FileNode* stagingHead = NULL;
 FileNode* stagingTail = NULL;
 
-Commit* commitHead = NULL;
+//Commit* commitHead = NULL;
 Branch* branchHead = NULL;
 
 // File Tracking Hash Table
@@ -90,9 +90,10 @@ void writeFile(const char* filename, const char* content) {
 void printSeparator() {
 	printf("===========================\n");
 }
-int fileExists(const char* filename) { 
+int fileExists(const char* filename) {
 	FILE* f = fopen(filename, "r");
-	if (!f) return 0;
-	fclose(f);
-	return 1;
+	if (f) { fclose(f); return 1; }
+	return 0;
 }
+
+

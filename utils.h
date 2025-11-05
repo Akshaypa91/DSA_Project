@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h> //for Time Function
-
+//test 2
 //For Other Operating Systems
 #ifdef _WIN32
 #include <direct.h>
@@ -13,6 +13,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #endif
+void initHashTable();
 
 typedef struct FileNode {
     char filename[100];
@@ -68,6 +69,7 @@ void checkoutCommit(unsigned long commitId);
 void createBranch(char* name);
 void listBranches();
 void checkoutBranch(char* name);
+
 
 // Merge
 void mergeBranch(char* branchName);
