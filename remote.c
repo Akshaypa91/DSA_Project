@@ -2,31 +2,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Forward declarations
-void enqueuePush(const char* commitID);
-void pullCommit(const char* commitID);
-
-// Push to remote repository
-void pushToRemote(char* remotePath) {
-	if (!remotePath) return;
-	enqueuePush(remotePath);
-}
-
-// Pull from remote repository
-void pullFromRemote(char* remotePath) {
-	if (!remotePath) return;
-	pullCommit(remotePath);
-}
-
+// Push local repo to remote
 void pushToRemote(char* remotePath) {
     if (!remotePath) {
         printf("Invalid remote path\n");
         return;
     }
 
-    char command[256];
+    printf("Pushing repository to remote: %s\n", remotePath);
+
+    char command[512];
+
+    // Windows xcopy command
     snprintf(command, sizeof(command),
-             "cp -r .mini_git %s/", remotePath);
+             "xcopy .mini_git %s\\.mini_git /E /I /Y >nul", remotePath);
 
     int result = system(command);
 
@@ -36,17 +25,26 @@ void pushToRemote(char* remotePath) {
         printf("Push failed.\n");
 }
 
+// Pull remote repo to local folder
+void pullFromRemote(char* remotePath) {
+    if (!remotePath) {
+        printf("Invalid remote path\n");
+        return;
+    }
 
-void pullCommit(const char* commitID) {
-	printf("Pulling commit %s from remote...\n", commitID);
+    printf("Pulling repository from remote: %s\n", remotePath);
 
-	// Simulate pull logic
-	char command[256];
-	snprintf(command, sizeof(command), "cp -r %s/.minigit ./", commitID);
-	int result = system(command);
+    char command[512];
 
-	if (result == 0)
-		printf("Pull successful! Commit %s restored from remote.\n", commitID);
-	else
-		printf("Pull failed. Commit not found in remote.\n");
+    // Windows xcopy command
+    snprintf(command, sizeof(command),
+             "xcopy %s\\.mini_git .\\.mini_git /E /I /Y >nul", remotePath);
+
+    int result = system(command);
+
+    if (result == 0)
+        printf("Pull successful! Repository restored from %s\n", remotePath);
+    else
+        printf("Pull failed. Remote repository not found.\n");
 }
+
