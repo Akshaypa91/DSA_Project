@@ -18,20 +18,24 @@ void pullFromRemote(char* remotePath) {
 	pullCommit(remotePath);
 }
 
-// Internal helpers
-void enqueuePush(const char* commitID) {
-	printf("Pushing commit %s to remote...\n", commitID);
+void pushToRemote(char* remotePath) {
+    if (!remotePath) {
+        printf("Invalid remote path\n");
+        return;
+    }
 
-	// Simulate push logic
-	char command[256];
-	snprintf(command, sizeof(command), "cp -r .minigit %s/", commitID);
-	int result = system(command);
+    char command[256];
+    snprintf(command, sizeof(command),
+             "cp -r .mini_git %s/", remotePath);
 
-	if (result == 0)
-		printf("Push successful! Commit %s copied to remote.\n", commitID);
-	else
-		printf("Push failed. Please check the remote path.\n");
+    int result = system(command);
+
+    if (result == 0)
+        printf("Push successful! Copied repository to %s\n", remotePath);
+    else
+        printf("Push failed.\n");
 }
+
 
 void pullCommit(const char* commitID) {
 	printf("Pulling commit %s from remote...\n", commitID);
