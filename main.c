@@ -1,6 +1,6 @@
 // main.c
 #include "utils.h"
-//test2
+//test2 //test3
 int main(int argc, char* argv[]) {
 	if (argc < 2) {
 		printf("Usage: ./mini_git <command> [args]\n");
