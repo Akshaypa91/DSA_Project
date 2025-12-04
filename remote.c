@@ -2,49 +2,48 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Push local repo to remote
+// Forward declarations
+void enqueuePush(const char* commitID);
+void pullCommit(const char* commitID);
+
+// Push to remote repository
 void pushToRemote(char* remotePath) {
-    if (!remotePath) {
-        printf("Invalid remote path\n");
-        return;
-    }
-
-    printf("Pushing repository to remote: %s\n", remotePath);
-
-    char command[512];
-
-    // Windows xcopy command
-    snprintf(command, sizeof(command),
-             "xcopy .mini_git %s\\.mini_git /E /I /Y >nul", remotePath);
-
-    int result = system(command);
-
-    if (result == 0)
-        printf("Push successful! Copied repository to %s\n", remotePath);
-    else
-        printf("Push failed.\n");
+	if (!remotePath) return;
+	enqueuePush(remotePath);
 }
 
-// Pull remote repo to local folder
+// Pull from remote repository
 void pullFromRemote(char* remotePath) {
-    if (!remotePath) {
-        printf("Invalid remote path\n");
-        return;
-    }
+	if (!remotePath) return;
+	pullCommit(remotePath);
+}
 
-    printf("Pulling repository from remote: %s\n", remotePath);
+// Internal helpers
+void enqueuePush(const char* commitID) {
+	printf("Pushing commit %s to remote...\n", commitID);
 
-    char command[512];
+	// Simulate push logic
+	char command[256];
+	snprintf(command, sizeof(command), "cp -r .minigit %s/", commitID);
+	int result = system(command);
 
-    // Windows xcopy command
-    snprintf(command, sizeof(command),
-             "xcopy %s\\.mini_git .\\.mini_git /E /I /Y >nul", remotePath);
+	if (result == 0)
+		printf("Push successful! Commit %s copied to remote.\n", commitID);
+	else
+		printf("Push failed. Please check the remote path.\n");
+}
 
-    int result = system(command);
+void pullCommit(const char* commitID) {
+	printf("Pulling commit %s from remote...\n", commitID);
 
-    if (result == 0)
-        printf("Pull successful! Repository restored from %s\n", remotePath);
-    else
-        printf("Pull failed. Remote repository not found.\n");
+	// Simulate pull logic
+	char command[256];
+	snprintf(command, sizeof(command), "cp -r %s/.minigit ./", commitID);
+	int result = system(command);
+
+	if (result == 0)
+		printf("Pull successful! Commit %s restored from remote.\n", commitID);
+	else
+		printf("Pull failed. Commit not found in remote.\n");
 }
 
