@@ -22,6 +22,6 @@ $(TARGET): $(OBJS)
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Clean object files and executable
+# Clean object files and executable (Windows-compatible version)
 clean:
-	rm -f $(OBJS) $(TARGET)
+	del /f /q $(OBJS) $(TARGET)

@@ -47,7 +47,15 @@ void initHashTable() {
 }
 
 // Utility Helpers
-unsigned long simpleHash(char* str) { return 0; } // implement as needed
+unsigned long simpleHash(char* str) {
+	unsigned long hash = 5381;
+	int c;
+	char *p = str;
+	while ((c = *p++) != 0) {
+		hash = ((hash << 5) + hash) + (unsigned long)c; /* hash * 33 + c */
+	}
+	return hash;
+}
 
 void makeDir(const char* folder) {
 #ifdef _WIN32

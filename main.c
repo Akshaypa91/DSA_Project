@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) {
 			printf("Usage: ./mini_git checkout <commitID>\n");
 			return 1;
 		}
-		checkoutCommit(strtoul(argv[2], NULL, 10));
+		checkoutCommit(argv[2]);   // pass commit ID as STRING
 	}
 	else if (strcmp(argv[1], "branch") == 0) {
 		if (argc == 2) {

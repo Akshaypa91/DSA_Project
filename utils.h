@@ -63,7 +63,8 @@ void commitChanges(char* message);
 void logCommits();
 
 // Checkout
-void checkoutCommit(unsigned long commitId);
+void checkoutCommit(const char* commitID);
+void checkoutCommitByString(const char* commitID);
 
 // Branch
 void createBranch(char* name);
