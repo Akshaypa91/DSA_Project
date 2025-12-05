@@ -15,9 +15,6 @@
 #define COPY_CMD "cp -r %s/* ."
 #endif
 
-// ---------------------------------------------------------------------
-// 1) Checkout commit by string "c123456"
-// ---------------------------------------------------------------------
 void checkoutCommitByString(const char* commitID) {
     if (!commitID || strlen(commitID) == 0) {
         printf("Invalid commit ID!\n");
@@ -39,9 +36,6 @@ void checkoutCommitByString(const char* commitID) {
     printf("Checked out commit %s\n", commitID);
 }
 
-// ---------------------------------------------------------------------
-// 2) Checkout commit by ONLY NUMBER (ex: 554060)
-// ---------------------------------------------------------------------
 void checkoutCommit(const char* commitID) {
     // commitID may be "554060", convert it to "c554060"
     if (!commitID) return;
@@ -57,9 +51,6 @@ void checkoutCommit(const char* commitID) {
     checkoutCommitByString(buildID);
 }
 
-// ---------------------------------------------------------------------
-// 3) Checkout branch (NO changes, safe)
-// ---------------------------------------------------------------------
 void checkoutBranch(char* name) {
     FILE* f = fopen(".minigit/branches.txt", "r");
     if (!f) {
