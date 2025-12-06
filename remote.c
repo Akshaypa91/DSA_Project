@@ -46,4 +46,3 @@ void pullCommit(const char* commitID) {
 	else
 		printf("Pull failed. Commit not found in remote.\n");
 }
-

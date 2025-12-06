@@ -65,7 +65,8 @@ make clean
 | `status` | `./mini_git status` | Show staging area |
 | `branch` | `./mini_git branch <name>` | Create branch |
 | `branches` | `./mini_git branches` | List branches |
-| `checkout` | `./mini_git checkout <branch/commit>` | Switch branch/commit |
+| `checkout` | `./mini_git checkout-branch <branch>` | Switch branch |
+| `checkout` | `./mini_git checkout <commit>` | Switch commit |
 | `merge` | `./mini_git merge <branch>` | Merge branch |
 | `diff` | `./mini_git diff <id1> <id2>` | Compare commits |
 | `push` | `./mini_git push` | Push to remote |
