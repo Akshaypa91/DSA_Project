@@ -1,0 +1,26 @@
+# Build output
+build/
+mini_git
+mini_git.exe
+*.o
+*.d
+*.a
+
+# MiniGit's own repository data (when testing inside this checkout)
+.minigit/
+remoterepo/
+request/
+
+# Editor / tooling
+.vscode/
+.idea/
+.cph/
+*.swp
+*~
+.DS_Store
+
+# Sanitizer and profiling artefacts
+*.log
+callgrind.out.*
+vgcore.*
+core
